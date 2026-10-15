@@ -1,0 +1,65 @@
+name: SacredUniverse
+options:
+  bundleIdPrefix: com.utkarsh
+  deploymentTarget:
+    iOS: '27.0'
+  xcodeVersion: '27.0'
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: '6.0'
+    MARKETING_VERSION: '1.0'
+    CURRENT_PROJECT_VERSION: '1'
+    DEVELOPMENT_TEAM: ""
+    CODE_SIGN_STYLE: Automatic
+targets:
+  SacredCore:
+    type: framework
+    platform: iOS
+    sources: [Sources/SacredCore]
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.utkarsh.sacreduniverse.core
+  SacredUniverse:
+    type: application
+    platform: iOS
+    sources: [App]
+    dependencies:
+      - target: SacredCore
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: Sacred Universe
+        UILaunchScreen: {}
+        UIUserInterfaceStyle: Dark
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait, UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight]
+        ITSAppUsesNonExemptEncryption: false
+        LSApplicationCategoryType: public.app-category.education
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.utkarsh.sacreduniverse
+        PRODUCT_NAME: Sacred Universe
+        PRODUCT_MODULE_NAME: SacredUniverse
+        TARGETED_DEVICE_FAMILY: '1'
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        SUPPORTS_MACCATALYST: NO
+  SacredUniverseUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: [UITests]
+    dependencies:
+      - target: SacredUniverse
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.utkarsh.sacreduniverse.uitests
+        TEST_TARGET_NAME: SacredUniverse
+schemes:
+  SacredUniverse:
+    build:
+      targets:
+        SacredUniverse: all
+        SacredUniverseUITests: [test]
+    test:
+      targets: [SacredUniverseUITests]
